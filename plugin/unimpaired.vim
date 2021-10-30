@@ -33,17 +33,12 @@ endfunction
 
 function! s:MapNextFamily(map,cmd) abort
   let prefix = '<Plug>(unimpaired-' . a:cmd
-  let map = '<Plug>unimpaired'.toupper(a:map)
   let cmd = '".(v:count ? v:count : "")."'.a:cmd
   let end = '"<CR>'.(a:cmd ==# 'l' || a:cmd ==# 'c' ? 'zv' : '')
   execute 'nnoremap <silent> '.prefix.'previous) :<C-U>exe "'.cmd.'previous'.end
   execute 'nnoremap <silent> '.prefix.'next)     :<C-U>exe "'.cmd.'next'.end
   execute 'nnoremap <silent> '.prefix.'first)    :<C-U>exe "'.cmd.'first'.end
   execute 'nnoremap <silent> '.prefix.'last)     :<C-U>exe "'.cmd.'last'.end
-  execute 'nnoremap <silent> '.map.'Previous :<C-U>exe "'.cmd.'previous'.end
-  execute 'nnoremap <silent> '.map.'Next     :<C-U>exe "'.cmd.'next'.end
-  execute 'nnoremap <silent> '.map.'First    :<C-U>exe "'.cmd.'first'.end
-  execute 'nnoremap <silent> '.map.'Last     :<C-U>exe "'.cmd.'last'.end
   exe s:Map('n', '['.        a:map , prefix.'previous)')
   exe s:Map('n', ']'.        a:map , prefix.'next)')
   exe s:Map('n', '['.toupper(a:map), prefix.'first)')
@@ -51,15 +46,11 @@ function! s:MapNextFamily(map,cmd) abort
   if a:cmd ==# 'c' || a:cmd ==# 'l'
     execute 'nnoremap <silent> '.prefix.'pfile)  :<C-U>exe "'.cmd.'pfile'.end
     execute 'nnoremap <silent> '.prefix.'nfile)  :<C-U>exe "'.cmd.'nfile'.end
-    execute 'nnoremap <silent> '.map.'PFile :<C-U>exe "'.cmd.'pfile'.end
-    execute 'nnoremap <silent> '.map.'NFile :<C-U>exe "'.cmd.'nfile'.end
     exe s:Map('n', '[<C-'.toupper(a:map).'>', prefix.'pfile)')
     exe s:Map('n', ']<C-'.toupper(a:map).'>', prefix.'nfile)')
   elseif a:cmd ==# 't'
     nnoremap <silent> <Plug>(unimpaired-ptprevious) :<C-U>exe v:count1 . "ptprevious"<CR>
     nnoremap <silent> <Plug>(unimpaired-ptnext) :<C-U>exe v:count1 . "ptnext"<CR>
-    execute 'nnoremap <silent> '.map.'PPrevious :<C-U>exe "p'.cmd.'previous'.end
-    execute 'nnoremap <silent> '.map.'PNext :<C-U>exe "p'.cmd.'next'.end
     exe s:Map('n', '[<C-T>', '<Plug>(unimpaired-ptprevious)')
     exe s:Map('n', ']<C-T>', '<Plug>(unimpaired-ptnext)')
   endif
@@ -159,8 +150,6 @@ endfunction
 
 nnoremap <silent> <Plug>(unimpaired-directory-next)     :<C-U>execute <SID>NextFileEntry(v:count1)<CR>
 nnoremap <silent> <Plug>(unimpaired-directory-previous) :<C-U>execute <SID>PreviousFileEntry(v:count1)<CR>
-nnoremap <silent> <Plug>unimpairedDirectoryNext     :<C-U>execute <SID>NextFileEntry(v:count1)<CR>
-nnoremap <silent> <Plug>unimpairedDirectoryPrevious :<C-U>execute <SID>PreviousFileEntry(v:count1)<CR>
 exe s:Map('n', ']f', '<Plug>(unimpaired-directory-next)')
 exe s:Map('n', '[f', '<Plug>(unimpaired-directory-previous)')
 
@@ -180,12 +169,6 @@ exe s:Map('x', ']n', '<Plug>(unimpaired-context-next)')
 exe s:Map('o', '[n', '<Plug>(unimpaired-context-previous)')
 exe s:Map('o', ']n', '<Plug>(unimpaired-context-next)')
 
-nnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>Context(1)<CR>
-nnoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>Context(0)<CR>
-xnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>exe 'normal! gv'<Bar>call <SID>Context(1)<CR>
-xnoremap <silent> <Plug>unimpairedContextNext     :<C-U>exe 'normal! gv'<Bar>call <SID>Context(0)<CR>
-onoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>ContextMotion(1)<CR>
-onoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>ContextMotion(0)<CR>
 
 function! s:Context(reverse) abort
   call search('^\(@@ .* @@\|[<=>|]\{7}[<=>|]\@!\)', a:reverse ? 'bW' : 'W')
@@ -243,8 +226,6 @@ nnoremap <silent> <Plug>(unimpaired-put-above-leftward)  :<C-U>call <SID>putline
 nnoremap <silent> <Plug>(unimpaired-put-below-leftward)  :<C-U>call <SID>putline(v:count1 . ']p', 'Below')<CR><']
 nnoremap <silent> <Plug>(unimpaired-put-above-reformat)  :<C-U>call <SID>putline(v:count1 . '[p', 'Above')<CR>=']
 nnoremap <silent> <Plug>(unimpaired-put-below-reformat)  :<C-U>call <SID>putline(v:count1 . ']p', 'Below')<CR>=']
-nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('[p', 'above')<CR>
-nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p', 'below')<CR>
 
 exe s:Map('n', '[p', '<Plug>(unimpaired-put-above)')
 exe s:Map('n', ']p', '<Plug>(unimpaired-put-below)')
