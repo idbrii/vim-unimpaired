@@ -29,7 +29,7 @@ function! s:Map(...) abort
   return ''
 endfunction
 
-" Section: Next and previous
+" Section: Next and previous {{{1
 
 function! s:MapNextFamily(map,cmd) abort
   let prefix = '<Plug>(unimpaired-' . a:cmd
@@ -164,7 +164,7 @@ nnoremap <silent> <Plug>unimpairedDirectoryPrevious :<C-U>execute <SID>PreviousF
 exe s:Map('n', ']f', '<Plug>(unimpaired-directory-next)')
 exe s:Map('n', '[f', '<Plug>(unimpaired-directory-previous)')
 
-" Section: Diff
+" Section: Diff {{{1
 
 nnoremap <silent> <Plug>(unimpaired-context-previous) :<C-U>call <SID>Context(1)<CR>
 nnoremap <silent> <Plug>(unimpaired-context-next)     :<C-U>call <SID>Context(0)<CR>
@@ -221,7 +221,7 @@ function! s:ContextMotion(reverse) abort
   endif
 endfunction
 
-" Section: Put
+" Section: Put {{{1
 
 function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
